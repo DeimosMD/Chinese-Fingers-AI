@@ -2,8 +2,6 @@ import os
 import sys
 from shlex import split
 
-import jsonpickle
-
 from Bot import Bot
 from Game import Game
 
@@ -22,8 +20,6 @@ def helps():
         "bot test <game_num> [<verbose (write true or false; default false)>]         \n#tests bot against an untrained bot for a certain amount of games and returns results")
     print("bot reset         \n#resets the bot")
     print("bot data         \n#prints out the bots long-term memory")
-    print("bot save <save_name>        \n#saves data of current bot to disc")
-    print("bot load <save_name>        \n#loads data of specified bot from disc")
 
 
 class App:
@@ -34,12 +30,6 @@ if __name__ == "__main__":
     print("\n")
     helps()
     print("\n\n")
-    directory = os.path.expanduser('~') + "/.Chinese_Fingers_AI/"
-    dirSaves = directory + "saves/"
-    if not os.path.exists(directory):
-        os.mkdir(directory)
-    if not os.path.exists(dirSaves):
-        os.mkdir(dirSaves)
     while True:
         args = split(input("> ").lower())
         if len(args) > 0:
@@ -124,21 +114,6 @@ if __name__ == "__main__":
                             elif len(args) == 4:
                                 App.bot.test(int(args[2]), args[3].lower() == "true" or args[3].lower() == "t" or args[
                                     3].lower() == "y" or args[3].lower() == "yes")
-                        case "save":
-                            if len(args) == 3:
-                                file = open(dirSaves + args[2] + ".json", "w")
-                                file.write(jsonpickle.encode(App.bot, unpicklable=True))
-                                file.close()
-                                print("Successfully saved bot as '" + args[2] + "'")
-                            else:
-                                print("Invalid Argument")
-                        case "load":
-                            if len(args) == 3:
-                                file = open(dirSaves + args[2] + ".json", "r")
-                                App.bot = jsonpickle.decode(file.read())
-                                file.close()
-                                print("Successfully loaded bot from '" + args[2] + "'")
-                            else:
                                 print("Invalid Argument")
                         case _:
                             print("Invalid Argument")
