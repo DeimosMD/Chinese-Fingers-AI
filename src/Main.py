@@ -22,6 +22,11 @@ def helps():
     print("bot data         \n#prints out the bots long-term memory")
 
 
+def meansTrue(s) -> bool:
+    lower = s.lower()
+    return lower == "true" or lower == "t" or lower == "y" or lower == "yes"
+
+
 class App:
     bot = Bot()
 
@@ -101,8 +106,7 @@ if __name__ == "__main__":
                                 App.bot.train(int(args[2]), False)
                                 print("Finished training for", args[2], "games ( Total:", App.bot.totalTraining, ")")
                             elif len(args) == 4:
-                                App.bot.train(int(args[2]), args[3].lower() == "true" or args[3].lower() == "t" or args[
-                                    3].lower() == "y" or args[3].lower() == "yes")
+                                App.bot.train(int(args[2]), meansTrue(args[3]))
                                 print("Finished training for", args[2], "games ( Total:", App.bot.totalTraining, ")")
                             else:
                                 print("Invalid Argument")
@@ -112,8 +116,8 @@ if __name__ == "__main__":
                             if len(args) == 3:
                                 App.bot.test(int(args[2]), False)
                             elif len(args) == 4:
-                                App.bot.test(int(args[2]), args[3].lower() == "true" or args[3].lower() == "t" or args[
-                                    3].lower() == "y" or args[3].lower() == "yes")
+                                App.bot.test(int(args[2]), meansTrue(args[3]))
+                            else:
                                 print("Invalid Argument")
                         case _:
                             print("Invalid Argument")
